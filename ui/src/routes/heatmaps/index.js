@@ -12,6 +12,9 @@ import quotesHelper from '../../lib/quotes-helper';
 
 import style from './style';
 
+// variable will be replaced by webpack
+const chartsEndpoint = process.env.chartsEndpoint;
+
 export default class Heatmaps extends Component {
     constructor(props) {
         super(props);
@@ -361,13 +364,24 @@ export default class Heatmaps extends Component {
                 </div>
             )
         }
-
+        const chartLink = (e) => {
+            if (undefined === chartsEndpoint)
+            {
+                return null;
+            }
+            return (
+                <div class={style.heatmapSummaryRow}>Chart: <a target="_blank" href={`${chartsEndpoint}/#/exchanges/${e.exchange}/prices/${e.pair}`}><img src="assets/img/chart.png"/></a></div>
+            )
+        }
         const heatmapSummary = (e) => {
             return (
-                <div onClick={(ev) => this._showMap(ev, e)} class={style.heatmapSummary}>
-                    <div class={style.heatmapSummaryRow}>{e.exchange} / <span class={style.heatmapSummaryPair}>{e.pair}</span></div>
-                    <div class={style.heatmapSummaryRow}>Price: {e.current.last.price}{faIcon(e.current.delta.price)}</div>
-                    <div class={style.heatmapSummaryRow}>Volume: {e.current.last.volume}{faIcon(e.current.delta.volume)}</div>
+                <div class={style.heatmapSummary}>
+                    <div onClick={(ev) => this._showMap(ev, e)}>
+                        <div class={style.heatmapSummaryRow}>{e.exchange} / <span class={style.heatmapSummaryPair}>{e.pair}</span></div>
+                        <div class={style.heatmapSummaryRow}>Price: {e.current.last.price}{faIcon(e.current.delta.price)}</div>
+                        <div class={style.heatmapSummaryRow}>Volume: {e.current.last.volume}{faIcon(e.current.delta.volume)}</div>
+                    </div>
+                    {chartLink(e)}
                 </div>
             )
         }

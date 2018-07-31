@@ -71,8 +71,26 @@ export default function (config, env, helpers) {
           }
       }
   }
+  let chartsEndpoint = undefined;
+  if (undefined !== process.env.chartsEndpoint)
+  {
+      chartsEndpoint = process.env.chartsEndpoint.trim();
+      if ('/' == chartsEndpoint.substr(-1))
+      {
+          chartsEndpoint = chartsEndpoint.substr(0, chartsEndpoint.length - 1);
+      }
+      if ('' == chartsEndpoint)
+      {
+          chartsEndpoint = undefined;
+      }
+  }
+  if (undefined !== chartsEndpoint)
+  {
+      console.log(`Will use '${chartsEndpoint}' to display charts`);
+  }
   config.plugins.push(new webpack.DefinePlugin({
       'process.env.wsEndpoint': JSON.stringify(wsEndpoint),
-      'process.env.defaultTheme': JSON.stringify(defaultTheme)
+      'process.env.defaultTheme': JSON.stringify(defaultTheme),
+      'process.env.chartsEndpoint': JSON.stringify(chartsEndpoint)
   }));
 }
