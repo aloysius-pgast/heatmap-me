@@ -13,6 +13,7 @@ Use it at your own risks and be careful with your money ;)
 * it subscribes to a stream on _Crypto Exchange Gateway_
 * it computes price & volume evolution for multiple periods, for each pair in the stream
 * it emits computed data every 60s over a ws
+* it comes with a basic UI which displays heatmaps
 
 By default, data will be computed for following periods :
 
@@ -24,6 +25,8 @@ By default, data will be computed for following periods :
 * 5 days
 
 See [documentation in _doc_ directory](doc/ws/index.adoc) for a description of _websocket data_
+
+Check https://www.neotodamoon.com for a demo of the UI
 
 ## Installation
 
