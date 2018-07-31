@@ -767,6 +767,32 @@ _checkKlines(klines)
     let delay = klinesIntervalsMapping[klines.interval];
     let previous = null;
     let data = [];
+    // in case first element starts with null values, try to replace null values
+    if (null === klines.data[0].open)
+    {
+        // find first entry with a non-null value for open
+        let open = null;
+        _.forEach(klines.data, (e) => {
+            if (null !== e.open)
+            {
+                open = e.open;
+                return false;
+            }
+        });
+        if (null !== open)
+        {
+            // update null values
+            _.forEach(klines.data, (e) => {
+                if (null === e.open)
+                {
+                    e.open = open;
+                    e.close = open;
+                    return;
+                }
+                return false;
+            });
+        }
+    }
     _.forEach(klines.data, (e) => {
         if (null !== previous)
         {
