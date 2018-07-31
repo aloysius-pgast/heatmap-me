@@ -10,7 +10,7 @@ Use it at your own risks and be careful with your money ;)
 
 ## What it does
 
-* it subscribes to a stream on _Crypto Exchange Gateway_
+* it subscribes to a stream on [Crypto Exchanges Gateway](https://github.com/aloysius-pgast/crypto-exchanges-gateway)
 * it computes price & volume evolution for multiple periods, for each pair in the stream
 * it emits computed data every 60s over a ws
 * it comes with a basic UI which displays heatmaps
@@ -27,6 +27,8 @@ By default, data will be computed for following periods :
 See [documentation in _doc_ directory](doc/ws/index.adoc) for a description of _websocket data_
 
 Check https://www.neotodamoon.com for a demo of the UI
+
+NB: _Heatmap Me_ relies on [Crypto Exchanges Gateway](https://github.com/aloysius-pgast/crypto-exchanges-gateway) to connect to exchanges, so you will need to **deploy your own instance** of _Crypto Exchanges Gateway_ in order to use it
 
 ## Installation
 
