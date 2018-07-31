@@ -1,0 +1,581 @@
+= Notifications
+
+[NOTE]
+====
+Notifications might be compressed using _deflate_ if requested upon connect
+====
+
+== Format
+
+[cols="1,1a,3a", options="header"]
+|===
+|Name
+|Type
+|Description
+
+|compressed
+|boolean
+|Whether or not data is compressed :
+
+* _false_ : _data_ can be parsed as JSON directly
+* _true_ : _data_ must be _base64_ decoded and decompressed before being parsed as JSON
+
+|data
+|object
+|Per-exchange data
+
+|_{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}exchange1_
+|object
+|Data for _exchange1_ exchange
+
+|_{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}pair1_
+|object
+|Data for _pair1_ pair on _exchange1_ exchange
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}current
+|object
+|Data for current period
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}period
+|string (_5m,3m,1m_)
+|Period identifier
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}duration
+|integer
+|Duration of the period in seconds
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}last
+|object
+|Current period (*not finished* yet)
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}price
+|float
+|Last price
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}high
+|float
+|Highest price
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}low
+|float
+|Lowest price
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}volume
+|float
+|Volume
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}fromTimestamp
+|integer
+|Unix timestamp (sec) of the beginning of the period
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}toTimestamp
+|integer
+|Unix timestamp (sec) of the end of the period
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}previous
+|object
+|Previous period (*finished*)
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}price
+|float
+|Last price
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}high
+|float
+|Highest price
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}low
+|float
+|Lowest price
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}volume
+|float
+|Volume
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}fromTimestamp
+|integer
+|Unix timestamp (sec) of the beginning of the period
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}toTimestamp
+|integer
+|Unix timestamp (sec) of the end of the period
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}delta
+|object
+|Evolution between both periods
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}price
+|float
+|Price delta
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}pricePercent
+|float
+|Price evolution in % (0-100)
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}volume
+|float
+|Volume delta
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}volumePercent
+|float
+|Volume evolution in % (0-100)
+
+|_{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}period1_
+|object
+|Data for period with id _period1_
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}period
+|string
+|Period identifier (usually same as _period1_, unless _period1_ = _xm_). Examples :
+
+* 15m
+* 1h
+* 5d
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}duration
+|integer
+|Duration of the period in seconds
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}last
+|object
+|Last period (*finished*)
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}price
+|float
+|Last price (can be _null_ if exchange did not return any data for the period)
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}high
+|float
+|Highest price (can be _null_ if exchange did not return any data for the period)
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}low
+|float
+|Lowest price (can be _null_ if exchange did not return any data for the period)
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}volume
+|float
+|Volume
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}fromTimestamp
+|integer
+|Unix timestamp (sec) of the beginning of the period
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}toTimestamp
+|integer
+|Unix timestamp (sec) of the end of the period
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}previous
+|object
+|Previous period (*finished*)
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}price
+|float
+|Last price (can be _null_ if exchange did not return any data for the period)
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}high
+|float
+|Highest price (can be _null_ if exchange did not return any data for the period)
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}low
+|float
+|Lowest price (can be _null_ if exchange did not return any data for the period)
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}volume
+|float
+|Volume
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}fromTimestamp
+|integer
+|Unix timestamp (sec) of the beginning of the period
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}toTimestamp
+|integer
+|Unix timestamp (sec) of the end of the period
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}delta
+|object
+|Evolution between both periods
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}price
+|float
+|Price delta (can be _null_ if exchange did not return any data for one of the two the periods)
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}pricePercent
+|float
+|Price evolution in % (0-100) (can be _null_ if exchange did not return any data for one of the two the periods)
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}volume
+|float
+|Volume delta (can be _null_ if exchange did not return any data for one of the two the periods)
+
+|{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}volumePercent
+|float
+|Volume evolution in % (0-100) (can be _null_ if exchange did not return any data for one of the two the periods or if _delta_ is _0_)
+
+|_{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}..._
+|
+|
+
+|_{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}periodN_
+|object
+|Data for period with id _periodN_
+
+|_{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}..._
+|
+|
+
+|_{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}pairN_
+|object
+|Data for _pairN_ pair on _exchange1_ exchange
+
+|_{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}..._
+|
+|
+
+|_{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}exchangeN_
+|object
+|Data for _exchangeN_ exchange
+
+|_{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}pair1_
+|object
+|Data for _pair1_ pair on _exchangeN_ exchange
+
+|_{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}..._
+|
+|
+
+|_{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}{nbsp}pairN_
+|object
+|Data for _pairN_ pair on _exchangeN_ exchange
+
+|===
+
+[NOTE]
+====
+Period with key _xm_ has a special meaning and can have one of the following identifier (depending on what is received from gateway) :
+
+* 5m
+* 3m
+* 1m
+
+If _compressed_ is _true_, _data_ will be a _base64_ string instead of an object
+====
+
+.Examples
+
+[source,json]
+----
+{
+    "data":{
+        "binance":{
+            "BTC-NEO":{
+                "current":{
+                    "period":"5m",
+                    "duration":300,
+                    "last":{
+                        "price":0.003993,
+                        "high":0.003999,
+                        "low":0.003991,
+                        "volume":2874.85,
+                        "fromTimestamp":1532957100,
+                        "toTimestamp":1532957400
+                    },
+                    "previous":{
+                        "price":0.003998,
+                        "high":0.004001,
+                        "low":0.003995,
+                        "volume":1358.04,
+                        "fromTimestamp":1532956800,
+                        "toTimestamp":1532957100
+                    },
+                    "delta":{
+                        "price":-0.000005,
+                        "pricePercent":-0.1251,
+                        "volume":1516.81,
+                        "volumePercent":111.6911
+                    }
+                },
+                "xm":{
+                    "period":"5m",
+                    "duration":300,
+                    "last":{
+                        "price":0.003998,
+                        "high":0.004001,
+                        "low":0.003995,
+                        "volume":1358.04,
+                        "toTimestamp":1532957100,
+                        "fromTimestamp":1532956800
+                    },
+                    "previous":{
+                        "price":0.004001,
+                        "high":0.004003,
+                        "low":0.003999,
+                        "volume":3272.97,
+                        "toTimestamp":1532956800,
+                        "fromTimestamp":1532956500
+                    },
+                    "delta":{
+                        "price":-0.000003,
+                        "pricePercent":-0.075,
+                        "volume":-1914.93,
+                        "volumePercent":-58.5074
+                    }
+                },
+                "15m":{
+                    "period":"15m",
+                    "duration":900,
+                    "last":{
+                        "price":0.003998,
+                        "high":0.004003,
+                        "low":0.003995,
+                        "volume":9702.49,
+                        "toTimestamp":1532957100,
+                        "fromTimestamp":1532956200
+                    },
+                    "previous":{
+                        "price":0.004002,
+                        "high":0.00401,
+                        "low":0.004002,
+                        "volume":13268.53,
+                        "toTimestamp":1532956200,
+                        "fromTimestamp":1532955300
+                    },
+                    "delta":{
+                        "price":-0.000004,
+                        "pricePercent":-0.1,
+                        "volume":-3566.04,
+                        "volumePercent":-26.8759
+                    }
+                }
+            }
+        },
+        "okex":{
+            "USDT-NEO":{
+                "current":{
+                    "period":"5m",
+                    "duration":300,
+                    "last":{
+                        "price":32.5717,
+                        "high":32.5717,
+                        "low":32.5161,
+                        "volume":344.66995,
+                        "fromTimestamp":1532957100,
+                        "toTimestamp":1532957400
+                    },
+                    "previous":{
+                        "price":32.5387,
+                        "high":32.642,
+                        "low":32.5038,
+                        "volume":509.9177,
+                        "fromTimestamp":1532956800,
+                        "toTimestamp":1532957100
+                    },
+                    "delta":{
+                        "price":0.033,
+                        "pricePercent":0.1014,
+                        "volume":-165.24775,
+                        "volumePercent":-32.4067
+                    }
+                },
+                "xm":{
+                    "period":"5m",
+                    "duration":300,
+                    "last":{
+                        "price":32.5387,
+                        "high":32.642,
+                        "low":32.5038,
+                        "volume":509.9177,
+                        "toTimestamp":1532957100,
+                        "fromTimestamp":1532956800
+                    },
+                    "previous":{
+                        "price":32.5689,
+                        "high":32.6239,
+                        "low":32.5055,
+                        "volume":344.38496,
+                        "toTimestamp":1532956800,
+                        "fromTimestamp":1532956500
+                    },
+                    "delta":{
+                        "price":-0.0302,
+                        "pricePercent":-0.0927,
+                        "volume":165.53274,
+                        "volumePercent":48.0662
+                    }
+                },
+                "15m":{
+                    "period":"15m",
+                    "duration":900,
+                    "last":{
+                        "price":32.5387,
+                        "high":32.642,
+                        "low":32.5033,
+                        "volume":1367.57209,
+                        "toTimestamp":1532957100,
+                        "fromTimestamp":1532956200
+                    },
+                    "previous":{
+                        "price":32.5031,
+                        "high":32.7357,
+                        "low":32.5002,
+                        "volume":1452.62417,
+                        "toTimestamp":1532956200,
+                        "fromTimestamp":1532955300
+                    },
+                    "delta":{
+                        "price":0.0356,
+                        "pricePercent":0.1095,
+                        "volume":-85.05208,
+                        "volumePercent":-5.8551
+                    }
+                }
+            },
+            "BTC-GAS":{
+                "current":{
+                    "period":"5m",
+                    "duration":300,
+                    "last":{
+                        "price":0.00121247,
+                        "high":0.001218,
+                        "low":0.00121247,
+                        "volume":280.78121,
+                        "fromTimestamp":1532957100,
+                        "toTimestamp":1532957400
+                    },
+                    "previous":{
+                        "price":0.00121617,
+                        "high":0.00121824,
+                        "low":0.00121385,
+                        "volume":212.73776,
+                        "fromTimestamp":1532956800,
+                        "toTimestamp":1532957100
+                    },
+                    "delta":{
+                        "price":-0.0000037,
+                        "pricePercent":-0.3042,
+                        "volume":68.04345,
+                        "volumePercent":31.9847
+                    }
+                },
+                "xm":{
+                    "period":"5m",
+                    "duration":300,
+                    "last":{
+                        "price":0.00121617,
+                        "high":0.00121824,
+                        "low":0.00121385,
+                        "volume":212.73776,
+                        "toTimestamp":1532957100,
+                        "fromTimestamp":1532956800
+                    },
+                    "previous":{
+                        "price":0.00121281,
+                        "high":0.00121804,
+                        "low":0.0012123,
+                        "volume":211.98374,
+                        "toTimestamp":1532956800,
+                        "fromTimestamp":1532956500
+                    },
+                    "delta":{
+                        "price":0.00000336,
+                        "pricePercent":0.277,
+                        "volume":0.75402,
+                        "volumePercent":0.3557
+                    }
+                },
+                "15m":{
+                    "period":"15m",
+                    "duration":900,
+                    "last":{
+                        "price":0.00121617,
+                        "high":0.00121824,
+                        "low":0.0012123,
+                        "volume":649.26509,
+                        "toTimestamp":1532957100,
+                        "fromTimestamp":1532956200
+                    },
+                    "previous":{
+                        "price":0.00121327,
+                        "high":0.00122472,
+                        "low":0.00121327,
+                        "volume":731.65337,
+                        "toTimestamp":1532956200,
+                        "fromTimestamp":1532955300
+                    },
+                    "delta":{
+                        "price":0.0000029,
+                        "pricePercent":0.239,
+                        "volume":-82.38828,
+                        "volumePercent":-11.2606
+                    }
+                }
+            }
+        }
+    },
+    "compressed":false
+}
+----
+
+== Decompress
+
+When compressed, notification will be such as below
+
+.Examples
+
+[source,json]
+----
+{
+    "data":"pZbdbtpAEIXfxdew2vnf5T5Sr9pe5AVQcAtqiCMCaaQo794xtMWLfwQtV2jX3jmeb86x36vmR/1WLd6ru/tP8893X9q/D4fdrn7at3+f692mWVWLSrbVrFoddsv9pnmqFhTjrHpcvpwu2m0e6moRQzSQxMlm1XrzfV2uPDY/fy+gmNGsem0eD1u/jXMwjeiXfNs12/vNtn7ZL7fP1QKEMJPveal909/IMX7MvHj9umkOL5dCyNhSKYRNtBRCic9CVHwxIY8JoTEhehSyqh/3y1JFjAgx5tlp6Wu9ezi2NQbM3OnAHCQQWLY/S3+vnCMFIUsffv7b9p+A/E8fRh52okFTQCAxFEJU5GIyVHI+C7G2Uag4LITGhcRxIFGUrA8kWqfuXAICU+rjsMCQoKUBUuKACx75eh79NpQ8ECwki5hvBaI2CYQNubSqIqZUAkloHSWYgoovDippy40okTRIZH5Ckk17HvEt8BO7JonBp5JynwoHH2o9UlmXUNalR/QGKH4kTEBJyXzVaLgVE1A4TrskmciFkpQKuwKIdZVECgBpRElbbkRJ5CkogNbzSbsFXackCln6RBwVCx99wiURLokA89VIEJSh8AlEhk6MEuUckp8oNzJBwkkm5mGTCyYpZyyk+ChgV4kz8TNpMEOP5YaVxDRlFFJUGGAisR2ZP8WzBmUy6FHBkFGOrxJYlTZZFVCSXg+FwN0rRScon2v7Y2W/xYcEcSTGx6gkgUkqKAKgpRbWIkgje8O6UjyIQlQYTNJTvUEppjyBBcC0Nd8FFgjqL5FufnlieLfiwFs+hkzpGGBSkpGSDLeTcy0a7naCsqdpZ0bMbwjeH73RKz5qOknFBKHILzEkwbMWzWCoHdv6F5J/kgRkD4MBMaeKg2Ic+fCn14kLeTz3IwxCytTx6hyZIUBmG3izYHAn8Uf7+wU=",
+    "compressed":true
+}
+----
+
+=== Node.js
+
+[source,js]
+----
+"use strict";
+const zlib = require('zlib');
+
+const b64Str = "pZbdbtpAEIXfxdew2vnf5T5Sr9pe5AVQcAtqiCMCaaQo794xtMWLfwQtV2jX3jmeb86x36vmR/1WLd6ru/tP8893X9q/D4fdrn7at3+f692mWVWLSrbVrFoddsv9pnmqFhTjrHpcvpwu2m0e6moRQzSQxMlm1XrzfV2uPDY/fy+gmNGsem0eD1u/jXMwjeiXfNs12/vNtn7ZL7fP1QKEMJPveal909/IMX7MvHj9umkOL5dCyNhSKYRNtBRCic9CVHwxIY8JoTEhehSyqh/3y1JFjAgx5tlp6Wu9ezi2NQbM3OnAHCQQWLY/S3+vnCMFIUsffv7b9p+A/E8fRh52okFTQCAxFEJU5GIyVHI+C7G2Uag4LITGhcRxIFGUrA8kWqfuXAICU+rjsMCQoKUBUuKACx75eh79NpQ8ECwki5hvBaI2CYQNubSqIqZUAkloHSWYgoovDippy40okTRIZH5Ckk17HvEt8BO7JonBp5JynwoHH2o9UlmXUNalR/QGKH4kTEBJyXzVaLgVE1A4TrskmciFkpQKuwKIdZVECgBpRElbbkRJ5CkogNbzSbsFXackCln6RBwVCx99wiURLokA89VIEJSh8AlEhk6MEuUckp8oNzJBwkkm5mGTCyYpZyyk+ChgV4kz8TNpMEOP5YaVxDRlFFJUGGAisR2ZP8WzBmUy6FHBkFGOrxJYlTZZFVCSXg+FwN0rRScon2v7Y2W/xYcEcSTGx6gkgUkqKAKgpRbWIkgje8O6UjyIQlQYTNJTvUEppjyBBcC0Nd8FFgjqL5FufnlieLfiwFs+hkzpGGBSkpGSDLeTcy0a7naCsqdpZ0bMbwjeH73RKz5qOknFBKHILzEkwbMWzWCoHdv6F5J/kgRkD4MBMaeKg2Ic+fCn14kLeTz3IwxCytTx6hyZIUBmG3izYHAn8Uf7+wU=";
+
+// base64 decode
+let buf = Buffer.from(b64Str, 'base64');
+
+// decompress
+zlib.inflateRaw(buf, function(err, str){
+    if (null !== err)
+    {
+        console.err(err);
+        return;
+    }
+    // parse JSON
+    let data = JSON.parse(str);
+    console.log(data);
+});
+----
+
+=== Browser
+
+Decompressing in browser requires following packages/lib :
+
+* link:https://www.npmjs.com/package/js-base64[js-base64] (Base64 decoder)
+* link:https://www.npmjs.com/package/pako[pako] (zlib port to javascript)
+
+[source,js]
+----
+import {Base64} from 'js-base64';
+import pako from 'pako';
+
+const b64Str = "pZbdbtpAEIXfxdew2vnf5T5Sr9pe5AVQcAtqiCMCaaQo794xtMWLfwQtV2jX3jmeb86x36vmR/1WLd6ru/tP8893X9q/D4fdrn7at3+f692mWVWLSrbVrFoddsv9pnmqFhTjrHpcvpwu2m0e6moRQzSQxMlm1XrzfV2uPDY/fy+gmNGsem0eD1u/jXMwjeiXfNs12/vNtn7ZL7fP1QKEMJPveal909/IMX7MvHj9umkOL5dCyNhSKYRNtBRCic9CVHwxIY8JoTEhehSyqh/3y1JFjAgx5tlp6Wu9ezi2NQbM3OnAHCQQWLY/S3+vnCMFIUsffv7b9p+A/E8fRh52okFTQCAxFEJU5GIyVHI+C7G2Uag4LITGhcRxIFGUrA8kWqfuXAICU+rjsMCQoKUBUuKACx75eh79NpQ8ECwki5hvBaI2CYQNubSqIqZUAkloHSWYgoovDippy40okTRIZH5Ckk17HvEt8BO7JonBp5JynwoHH2o9UlmXUNalR/QGKH4kTEBJyXzVaLgVE1A4TrskmciFkpQKuwKIdZVECgBpRElbbkRJ5CkogNbzSbsFXackCln6RBwVCx99wiURLokA89VIEJSh8AlEhk6MEuUckp8oNzJBwkkm5mGTCyYpZyyk+ChgV4kz8TNpMEOP5YaVxDRlFFJUGGAisR2ZP8WzBmUy6FHBkFGOrxJYlTZZFVCSXg+FwN0rRScon2v7Y2W/xYcEcSTGx6gkgUkqKAKgpRbWIkgje8O6UjyIQlQYTNJTvUEppjyBBcC0Nd8FFgjqL5FufnlieLfiwFs+hkzpGGBSkpGSDLeTcy0a7naCsqdpZ0bMbwjeH73RKz5qOknFBKHILzEkwbMWzWCoHdv6F5J/kgRkD4MBMaeKg2Ic+fCn14kLeTz3IwxCytTx6hyZIUBmG3izYHAn8Uf7+wU=";
+
+// base64 decode
+let str = Base64.atob(b64Str);
+
+// decompress
+str = pako.inflateRaw(str, {to:'string'});
+
+// parse JSON
+let data = JSON.parse(str);
+console.log(data);
+----

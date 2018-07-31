@@ -1,0 +1,70 @@
+{
+  "private": true,
+  "name": "heatmap-me-ui",
+  "version": "1.0.0",
+  "description": "Basic UI for Heatmap Me",
+  "author": "Aloysius Pendergast <aloysius.pgast@gmail.com>",
+  "license": "ISC",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
+    "build": "preact build --template src/index.html --no-prerender --service-worker false",
+    "serve": "preact build --template src/index.html --no-prerender --service-worker false && preact serve",
+    "dev": "preact watch --template src/index.html",
+    "lint": "eslint src"
+  },
+  "eslintConfig": {
+    "extends": "eslint-config-synacor"
+  },
+  "eslintIgnore": [
+    "build/*"
+  ],
+  "devDependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
+    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
+    "@fortawesome/react-fontawesome": "0.1.0-11",
+    "@material-ui/core": "^1.4.1",
+    "classnames": "^2.2.6",
+    "eslint": "^4.9.0",
+    "eslint-config-synacor": "^2.0.2",
+    "history": "^4.7.2",
+    "identity-obj-proxy": "^3.0.0",
+    "if-env": "^1.0.0",
+    "jest": "^21.2.1",
+    "js-base64": "^2.4.8",
+    "node-sass": "^4.9.2",
+    "pako": "^1.0.6",
+    "preact": "^8.2.6",
+    "preact-cli": "^2.1.0",
+    "preact-compat": "^3.17.0",
+    "preact-material-components": "^1.5.0",
+    "preact-render-spy": "^1.2.1",
+    "preact-router": "^2.5.7",
+    "sass-loader": "^7.0.3",
+    "wolfy87-eventemitter": "^5.2.5"
+  },
+  "dependencies": {},
+  "jest": {
+    "verbose": true,
+    "setupFiles": [
+      "<rootDir>/src/tests/__mocks__/browserMocks.js"
+    ],
+    "testURL": "http://localhost:8080",
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/tests/__mocks__/fileMock.js",
+      "\\.(css|less|scss)$": "identity-obj-proxy",
+      "^./style$": "identity-obj-proxy",
+      "^preact$": "<rootDir>/node_modules/preact/dist/preact.min.js",
+      "^react$": "preact-compat",
+      "^react-dom$": "preact-compat",
+      "^create-react-class$": "preact-compat/lib/create-react-class",
+      "^react-addons-css-transition-group$": "preact-css-transition-group"
+    }
+  }
+}

@@ -1,0 +1,56 @@
+@import "src/style/helpers";
+
+.this {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 56px;
+	padding: 0;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	z-index: 50;
+    @include themify($themes) {
+        background-color: themed('primaryColor');
+    }
+}
+
+.this h1 {
+	float: left;
+	margin: 0;
+	padding: 0 15px;
+	font-size: 24px;
+	line-height: 56px;
+	font-weight: 400;
+	color: #FFF;
+}
+
+.this nav {
+	float: left;
+	font-size: 100%;
+}
+
+.this nav a {
+	display: inline-block;
+	height: 56px;
+	line-height: 56px;
+	padding: 0 15px;
+	min-width: 50px;
+	text-align: center;
+	text-decoration: none;
+	will-change: background-color;
+    @include themify($themes) {
+        color: themed('textOnPrimaryColor');
+    }
+}
+
+.this nav a.active {
+    @include themify($themes) {
+        background-color: themed('secondaryColor');
+    }
+}
+
+.this nav.noTouch a:hover {
+    @include themify($themes) {
+        background-color: themed('secondaryColor');
+    }
+}

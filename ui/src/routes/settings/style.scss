@@ -1,0 +1,19 @@
+@import "src/style/helpers";
+
+.this {
+	padding: 75px 20px;
+	min-height: 100%;
+	width: 100%;
+}
+
+.this label {
+    font-size: 1rem;
+}
+
+.this label.sectionHeader {
+    font-size: 1.15rem;
+}
+
+.section {
+    margin-bottom: 15px;
+}

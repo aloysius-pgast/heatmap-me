@@ -1,0 +1,22 @@
+[
+    {
+        "timestamp":1531735200,
+        "open":34.739,
+        "high":34.88,
+        "low":34.4,
+        "close":34.636,
+        "volume":9848.297,
+        "remainingTime":0,
+        "closed":true
+    },
+    {
+        "timestamp":1531736100,
+        "open":34.636,
+        "high":35,
+        "low":34.52,
+        "close":34.9,
+        "volume":10683.545,
+        "remainingTime":308,
+        "closed":false
+    }
+]

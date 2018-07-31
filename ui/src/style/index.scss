@@ -1,0 +1,34 @@
+@import "src/style/helpers";
+@import "@material/theme/mixins";
+@import "preact-material-components/Radio/_mixins";
+
+html, body {
+	width: 100%;
+    height: 100%;
+	padding: 0;
+	margin: 0;
+    font: 14px/1.21 Roboto, sans-serif;
+	font-weight: 400;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@include themifyBody($themes) {
+    background-color: themed('backgroundColor');
+    color: themed('textOnBackgroundColor');
+    --mdc-theme-background: #{themed('backgroundColor')};
+    --mdc-theme-text-primary-on-background: #{themed('textOnBackgroundColor')};
+    --mdc-theme-primary: #{themed('primaryColor')};
+    --mdc-theme-on-primary: #{themed('textOnPrimaryColor')};
+    --mdc-theme-secondary: #{themed('secondaryColor')};
+    --mdc-theme-on-secondary: #{themed('textOnSecondaryColor')};
+    @include mdc-radio-unchecked-stroke-color(call(get-function('themed'), 'secondaryColor'));
+}
+
+* {
+	box-sizing: border-box;
+}
+
+#app {
+    height: 100%;
+}

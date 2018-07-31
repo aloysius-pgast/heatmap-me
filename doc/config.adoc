@@ -1,0 +1,91 @@
+= Config
+
+== Minimum config
+
+.Examples
+
+[source,json]
+----
+{
+    "listen":{
+        /* only bind to localhost */
+        "ipaddr":"127.0.0.1",
+        "port":8002
+    },
+    "listenWs":{
+        /* only bind to localhost */
+        "ipaddr":"127.0.0.1",
+        "port":8003
+    },
+    "ui":{
+        /* enable ui (ui should be built first) */
+        "enabled":true
+    },
+    "gateway":{
+        /* identifier of the session declared on gateway */
+        "sessionId":"mystream.heatmap-me"
+    },
+    "logLevel":"warn"
+}
+----
+
+== Complete config
+
+.Examples
+
+[NOTE]
+====
+* When _ssl_ is enabled, following file should exist in ssl sub directory :
+  - _certificate.key_ (private key)
+  - _certificate.crt_ (ssl certificate)
+  - _ca.crt_ (optional) (intermediate certificate, not needed when using _self-signed_ certificate)
+====
+
+[source,json]
+----
+{
+    "listen":{
+        /* listen to all ip addresses */
+        "ipaddr":"*",
+        "port":8002,
+        /* in case you want to enable https */
+        "ssl":true
+    },
+    "listenWs":{
+        /* only bind to localhost */
+        "ipaddr":"127.0.0.1",
+        "port":8003,
+        /* in case you want to enable wss */
+        "ssl":true
+    },
+    "ui":{
+        /* enable ui (ui should be built first) */
+        "enabled":true
+    },
+    "logLevel":"debug",
+    /* Gateway informations */
+    "gateway":{
+        /* gateway's http & ws endpoints */
+        "restEndpoint":"http://127.0.0.1:8000",
+        "wsEndpoint":"ws://127.0.0.1:8001",
+        "apiKey":"",
+        /* identifier of the session declared on gateway */
+        "sessionId":"mystream.heatmap-me"
+    },
+    /* computation interval in seconds */
+    "computeInterval":60,
+    /* list of periods we want to compute data for */
+    "dataPeriods":["xm","15m","1h","4h","1d","5d"]
+}
+----
+
+[NOTE]
+====
+In _dataPeriods_, _xm_ means _the smallest period_ which be one of :
+
+* 5m
+* 3m
+* 1m
+
+Real period will be detected based on the first _kline_ notification received from gateway
+====

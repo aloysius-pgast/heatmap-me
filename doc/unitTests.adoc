@@ -1,0 +1,34 @@
+= Unit Tests
+
+Unit tests are located under _test_ directory
+
+== Running tests
+
+Tests can be run using one of the _run_ bash scripts under _test_ directory
+
+[source,bash]
+----
+test
+├── run
+└── tests
+    └── klines-manager
+        ├── run
+        └── test.js
+----
+
+[NOTE]
+====
+Every _run_ script will run all tests in sub-directories
+====
+
+== Examples
+
+=== Running all tests
+
+In order to run all tests, script _run_ in _test_ directory should be started
+
+[source,bash]
+----
+cd test
+./run
+----

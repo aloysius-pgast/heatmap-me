@@ -1,0 +1,46 @@
+= Endpoints
+
+[NOTE]
+====
+All examples below assume that service is listening for WS connection on _127.0.0.1:8003_ and that _wscat_ is available
+====
+
+== Default endpoint
+
+_ws://{ipaddr}:{port}_
+
+=== Optional query parameters
+
+[cols="1,1a,1a,3a", options="header"]
+|===
+
+|Name
+|Type
+|Default
+|Description
+
+|compress
+|boolean
+|false
+|Whether or not data should be compressed using _gzip_
+
+|pushEvery
+|integer
+|1
+|How many compute iteration
+
+|===
+
+.Examples
+
+Example to open a connection which will return compressed data and will receive data every 3 compute iteration :
+
+[NOTE]
+====
+If service is configured to compute data every 60s, connection will receive data every 180s
+====
+
+[source,bash]
+----
+wscat --connect 'ws://127.0.0.1:8003/?compress=true&pushEvery=3'
+----

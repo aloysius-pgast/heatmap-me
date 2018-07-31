@@ -1,0 +1,145 @@
+@import "src/style/helpers";
+
+.this {
+	padding: 75px 5px;
+	width: 100%;
+}
+
+.quote {
+    text-align:center;
+    padding-bottom:10px;
+    font-size:1.7em;
+    font-family: "Playfair Display";
+}
+
+.warning {
+    text-align:center;
+    margin-top: 30px;
+    font-size:1.5em;
+    font-family: "Playfair Display";
+    @include themify($themes) {
+        color: themed('noDataWarningColor');
+    }
+}
+
+.heatmap {
+    float:left;
+    margin-top:15px;
+    margin-right:10px;
+    cursor: pointer;
+}
+
+.heatmapPeriod, .heatmapFirstPeriod {
+    width:168px;
+}
+
+.heatmapFirstPeriod {
+    border-top:1px solid #000000;
+}
+
+.heatmapPeriodPrice {
+    width:50%;
+    text-align:center;
+    float:left;
+    padding-top:3px;
+    padding-bottom:3px;
+    border-left:1px solid #000000;
+    border-right:1px solid #000000;
+    border-bottom:1px solid #000000;
+}
+
+.heatmapPeriodVolume {
+    width:50%;
+    text-align:center;
+    float:right;
+    padding-top:3px;
+    padding-bottom:3px;
+    border-bottom:1px solid #000000;
+    border-right:1px solid #000000;
+}
+
+.heatmapPeriodPreviousValue {
+    margin-bottom:3px;
+}
+
+.heatmapSummary {
+    width:100%;
+    text-align:center;
+    float:left;
+    padding-top:10px;
+    padding-bottom:15px;
+}
+
+.heatmapSummaryPair {
+    font-weight:bold;
+}
+
+.heatmapSummaryRow {
+    margin-bottom:3px;
+}
+
+.detailedHeatmap {
+    width:90%;
+    max-width: 400px;
+    float:left;
+    margin-top:15px;
+    margin-right:10px;
+    cursor: pointer;
+}
+
+.detailedHeatmapFirstPeriod {
+    border-top:1px solid #000000;
+}
+
+.detailedHeatmapPeriodPrice {
+    width:50%;
+    text-align:center;
+    float:left;
+    padding-top:3px;
+    padding-bottom:3px;
+    border-left:1px solid #000000;
+    border-right:1px solid #000000;
+    border-bottom:1px solid #000000;
+}
+
+.detailedHeatmapPeriodVolume {
+    width:50%;
+    text-align:center;
+    float:right;
+    padding-top:3px;
+    padding-bottom:3px;
+    border-bottom:1px solid #000000;
+    border-right:1px solid #000000;
+}
+
+.detailedHeatmapPeriodId {
+    margin-bottom:10px;
+}
+
+.detailedHeatmapPeriodTimestamp {
+    margin-bottom:3px;
+}
+
+.detailedHeatmapPeriodPreviousValue {
+    margin-bottom:10px;
+}
+
+.detailedHeatmapPeriodLastValue {
+    margin-bottom:10px;
+}
+
+.detailedHeatmapSummary {
+    width:100%;
+    text-align:center;
+    float:left;
+    padding-top:10px;
+    padding-bottom:15px;
+}
+
+.detailedHeatmapSummaryPair {
+    font-weight:bold;
+}
+
+.detailedHeatmapSummaryRow {
+    margin-bottom:3px;
+}

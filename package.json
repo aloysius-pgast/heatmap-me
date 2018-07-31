@@ -1,0 +1,30 @@
+{
+  "name": "heatmap-me",
+  "version": "1.0.0",
+  "description": "Keep track of price evolution for various crypto currencies",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aloysius-pgast/heatmap-me.git"
+  },
+  "author": "Aloysius Pendergast <aloysius.pgast@gmail.com>",
+  "license": "ISC",
+  "homepage": "https://github.com/aloysius-pgast/heatmap-me",
+  "dependencies": {
+    "big.js": "^5.1.2",
+    "compression": "^1.7.1",
+    "crypto-exchanges-rest-client": "^1.0.1",
+    "crypto-exchanges-ws-client": "^1.0.5",
+    "debug": "^3.1.0",
+    "express": "^4.16.3",
+    "express-ws": "^4.0.0",
+    "lodash": "^4.17.10",
+    "winston": "^2.3.1",
+    "ws": "^5.2.1"
+  },
+  "devDependencies": {
+    "joi": "^13.4.0",
+    "mocha": "^5.2.0"
+  }
+}

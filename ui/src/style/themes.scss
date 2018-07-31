@@ -1,0 +1,29 @@
+$themes: (
+    light: (
+      backgroundColor: #e4e5e6,
+      textOnBackgroundColor: #000000,
+      primaryColor: #000000,
+      textOnPrimaryColor: #ffffff,
+      secondaryColor: #333333,
+      textOnSecondaryColor: #ffffff,
+      noDataWarningColor: #000000,
+    ),
+    neo: (
+      backgroundColor: #e4e5e6,
+      textOnBackgroundColor: #000000,
+      primaryColor: #618833,
+      textOnPrimaryColor: #ffffff,
+      secondaryColor: #8bc34a,
+      textOnSecondaryColor: #ffffff,
+      noDataWarningColor: #000000,
+    ),
+    dark: (
+      backgroundColor: #000000,
+      textOnBackgroundColor: #ffffff,
+      primaryColor: #565454,
+      textOnPrimaryColor: #ffffff,
+      secondaryColor: #7c7878,
+      textOnSecondaryColor: #ffffff,
+      noDataWarningColor: #ffffff,
+    ),
+);

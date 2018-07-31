@@ -1,0 +1,19 @@
+@import "src/style/helpers";
+
+.this {
+	padding: 75px 20px;
+	min-height: 100%;
+	width: 100%;
+    font-size: 1.1rem;
+}
+
+.heatmap {
+    margin-top:10px;
+    margin-bottom:10px;
+    width:90%;
+    max-width:300px;
+}
+
+.hintNumber {
+    color:#8f1bc1;
+}

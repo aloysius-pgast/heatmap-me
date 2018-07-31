@@ -1,0 +1,21 @@
+{
+    "listen":{
+        "ipaddr":"*",
+        "port":8002
+    },
+    "listenWs":{
+        "ipaddr":"*",
+        "port":8003
+    },
+    "ui":{
+        "enabled":true
+    },
+    "logLevel":"warn",
+    "computeInterval":60,
+    "dataPeriods":["xm","15m","1h","4h","1d","5d"],
+    "gateway":{
+        "restEndpoint":"http://127.0.0.1:8000",
+        "wsEndpoint":"ws://127.0.0.1:8001",
+        "sessionId":"mystream.heatmap-me"
+    }
+}
