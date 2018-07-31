@@ -86,7 +86,7 @@ initialize(config)
     this._restClient = new RestClient(this._restOpt);
 
     // create ws client
-    this._wsUri = `${config.gateway.wsEndpoint}/?sid=${this._config.gateway.sessionId}`;
+    this._wsUri = `${config.gateway.wsEndpoint}/?sid=${this._config.gateway.sessionId}&expires=false`;
     let wsOpt = {autoConnect:false, retryDelay:2500};
     if ('' != config.gateway.apiKey)
     {
