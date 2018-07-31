@@ -626,7 +626,17 @@ _processQueue()
     // first item in queue might be an update of last item in minutes/hours klines
     if (this._minutesHoursKlines.queue[0].timestamp == this._minutesHoursKlines.data[this._minutesHoursKlines.data.length - 1].timestamp)
     {
-        this._minutesHoursKlines.data[this._minutesHoursKlines.data.length - 1] = this._minutesHoursKlines.queue.shift();
+        let kline = this._minutesHoursKlines.queue.shift();
+        // update open/close if needed
+        if (null === kline.open)
+        {
+            kline.open = this._minutesHoursKlines.data[this._minutesHoursKlines.data.length - 1].open;
+        }
+        if (null === kline.close)
+        {
+            kline.close = this._minutesHoursKlines.data[this._minutesHoursKlines.data.length - 1].close;
+        }
+        this._minutesHoursKlines.data[this._minutesHoursKlines.data.length - 1] = kline;
     }
     let previous = this._minutesHoursKlines.data[this._minutesHoursKlines.data.length - 1];
     _.forEach(this._minutesHoursKlines.queue, (e) => {
