@@ -58,6 +58,9 @@ export default class Header extends Component {
                             })
                         }
             		</nav>
+                    <div class={style.githubLink}>
+                        <a href="https://github.com/aloysius-pgast/heatmap-me">APG &copy; ISC</a> 
+                    </div>
             	</header>
             </div>
         )

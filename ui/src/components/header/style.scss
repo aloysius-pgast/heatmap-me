@@ -54,3 +54,18 @@
         background-color: themed('secondaryColor');
     }
 }
+
+.githubLink {
+    float:right;
+    padding-right:10px;
+    position:relative;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+.githubLink a {
+    text-decoration: none;
+    @include themify($themes) {
+        color: themed('textOnPrimaryColor');
+    }
+}

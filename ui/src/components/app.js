@@ -6,7 +6,6 @@ import settings from '../lib/settings';
 import Header from './header';
 
 // Code-splitting is automated for routes
-import Test2 from '../routes/test2';
 import Heatmaps from '../routes/heatmaps';
 import Settings from '../routes/settings';
 import Help from '../routes/help';
@@ -53,18 +52,8 @@ export default class App extends Component {
                     <Heatmaps heatmapsSortCriterionTimestamp={this.state.heatmapsSortCriterionTimestamp} displayQuotesTimestamp={this.state.displayQuotesTimestamp} path="/maps/:exchange?/:pair?"/>
                     <Settings path="/settings"/>
                     <Help path="/help"/>
-                    <Test2 path="/test2" />
                 </Router>
             </div>
 		);
 	}
 }
-
-/*
-<Router onChange={this.handleRoute}>
-    <Heatmaps path="/maps" exchange={state.exchange}/>
-    <Heatmap path="/map" exchange={state.exchange} pair={state.pair}/>
-    <Test path="/test" />
-    <Test2 path="/test2" />
-</Router>
-*/
