@@ -9,5 +9,5 @@ When rebuilding UI, following optional environment variables can be defined :
 Example :
 
 ```
-publicPath='/ui' wsEndpoint='ws://127.0.0.1:8003' defaultTheme=light title='My Heatmap' npm run build
+publicPath='/ui' chartsEndpoint='https://mpe-demo.crazyme.net/ui' wsEndpoint='ws://127.0.0.1:8003' defaultTheme=light title='My Heatmap' npm run build
 ```
