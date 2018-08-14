@@ -293,6 +293,11 @@ async _getSupportedKlinesIntervals(timestamp)
                     if (null === daysInterval)
                     {
                         daysInterval = e.interval;
+                        // interval can cover max days (we can stop here)
+                        if (e.maxDays >= this._maxDays)
+                        {
+                            return false;
+                        }
                         return;
                     }
                     // we're looking for the minimum interval which can cover max days (so we stop after first matching interval)
